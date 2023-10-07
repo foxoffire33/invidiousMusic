@@ -31,8 +31,11 @@ module Invidious::Routes::API::V1::Search
     query = env.params.query["q"]? || ""
 
     begin
+      #client = HTTP::Client.new("suggestqueries-clients6.youtube.com")
+      #url = "complete/search?client=youtubeMusic&gs_ri=youtubeMusic&ds=yt&xssi=t&q=#{URI.encode_www_form(query)}"
+
       client = HTTP::Client.new("suggestqueries-clients6.youtube.com")
-      url = "complete/search?client=youtube&gs_ri=youtubeMusic&ds=yt&xssi=t&q=#{URI.encode_www_form(query)}"
+      url = "complete/search?client=youtube&hl=en&gl=NL_nl&gs_ri=youtubeMusic&ds=yt&gl=sg&gs_rn=64&xssi=t&q=#{URI.encode_www_form(query)}"
 
       response = client.get(url).body
 
