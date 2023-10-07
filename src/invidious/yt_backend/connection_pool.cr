@@ -37,9 +37,9 @@ struct YoutubeConnectionPool
         conn.close
         conn = HTTP::Client.new(url)
 
-        conn.family = (url.host == "www.youtube.com") ? CONFIG.force_resolve : Socket::Family::INET
+        conn.family = (url.host == "music.youtube.com") ? CONFIG.force_resolve : Socket::Family::INET
         conn.family = Socket::Family::INET if conn.family == Socket::Family::UNSPEC
-        conn.before_request { |r| add_yt_headers(r) } if url.host == "www.youtube.com"
+        conn.before_request { |r| add_yt_headers(r) } if url.host == "music.youtube.com"
         response = yield conn
       ensure
         pool.release(conn)
@@ -52,9 +52,9 @@ struct YoutubeConnectionPool
   private def build_pool
     DB::Pool(HTTP::Client).new(initial_pool_size: 0, max_pool_size: capacity, max_idle_pool_size: capacity, checkout_timeout: timeout) do
       conn = HTTP::Client.new(url)
-      conn.family = (url.host == "www.youtube.com") ? CONFIG.force_resolve : Socket::Family::INET
+      conn.family = (url.host == "music.youtube.com") ? CONFIG.force_resolve : Socket::Family::INET
       conn.family = Socket::Family::INET if conn.family == Socket::Family::UNSPEC
-      conn.before_request { |r| add_yt_headers(r) } if url.host == "www.youtube.com"
+      conn.before_request { |r| add_yt_headers(r) } if url.host == "music.youtube.com"
       conn
     end
   end
@@ -62,8 +62,8 @@ end
 
 def make_client(url : URI, region = nil)
   client = HTTPClient.new(url, OpenSSL::SSL::Context::Client.insecure)
-  client.family = (url.host == "www.youtube.com") ? CONFIG.force_resolve : Socket::Family::UNSPEC
-  client.before_request { |r| add_yt_headers(r) } if url.host == "www.youtube.com"
+  client.family = (url.host == "music.youtube.com") ? CONFIG.force_resolve : Socket::Family::UNSPEC
+  client.before_request { |r| add_yt_headers(r) } if url.host == "music.youtube.com"
   client.read_timeout = 10.seconds
   client.connect_timeout = 10.seconds
 
