@@ -67,9 +67,10 @@ module Invidious::Comments
       end
     end
 
-    if host == "www.youtube.com"
-      html = html.xpath_node(%q(//body/p)).not_nil!
-    end
+    #todo enable 
+    # if host == "www.youtube.com"
+      # html = html.xpath_node(%q(//body/p)).not_nil!
+    # end
 
     return html.to_xml(options: XML::SaveOptions::NO_DECL)
   end

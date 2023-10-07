@@ -32,7 +32,7 @@ module Invidious::Routes::API::V1::Search
 
     begin
       client = HTTP::Client.new("suggestqueries-clients6.youtube.com")
-      url = "/complete/search?client=youtube&hl=en&gl=#{region}&q=#{URI.encode_www_form(query)}&xssi=t&gs_ri=youtube&ds=yt"
+      url = "complete/search?client=youtube&gs_ri=youtubeMusic&ds=yt&xssi=t&q=#{URI.encode_www_form(query)}"
 
       response = client.get(url).body
 

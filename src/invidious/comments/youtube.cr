@@ -265,7 +265,7 @@ module Invidious::Comments
         },
         "40:embedded" => {
           "1:varint" => 4_i64,
-          "3:string" => "https://www.youtube.com",
+          "3:string" => "https://music.youtube.com",
           "4:string" => "",
         },
       },
